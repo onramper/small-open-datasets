@@ -19,7 +19,7 @@ const maxPage = 10; // Leave as null to get all pages
 	const finalResult: typeof result = {};
 
 	let pageOfLastError = firstPage;
-	for (let page = firstPage; !(page !== firstPage && Object.keys(result).length !== 0 && page <= maxPage); page++) {
+	for (let page = firstPage; (page === firstPage || Object.keys(result).length !== 0) && page <= maxPage; page++) {
 		try {
 			result = {};
 			const coins = await fetch(`https://api.coingecko.com/api/v3/coins?page=${page}`).then(res => res.json()) as {
