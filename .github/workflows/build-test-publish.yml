@@ -38,6 +38,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: generated
+          path: .
       - name: Setup node
         uses: actions/setup-node@v1
         with:
@@ -54,6 +55,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: generated
+          path: .
       - name: Get currently published data
         run: |
           mkdir old
