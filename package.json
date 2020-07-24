@@ -18,7 +18,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/corollari/base64-crypto-icons.git"
+    "url": "git+https://github.com/corollari/base64-cryptocurrency-icons.git"
   },
   "files": [
     "build/index.js",
