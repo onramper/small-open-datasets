@@ -26,15 +26,19 @@ jobs:
     strategy:
       matrix:
         node: [ '0.12', '4', '6', '8', '10', '12', '14' ] # Major releases as described in https://nodejs.org/en/download/releases/
-    name: Node ${{ matrix.node }} sample
+    name: Node ${{ matrix.node }} tests
     steps:
       - uses: actions/checkout@v2
+      - name: Get Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+      - run: npm ci
+      - run: npm run generate
       - name: Setup node
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node }}
-      - run: npm install
-      - run: npm run generate
       - run: npm test
 
   publish:
