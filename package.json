@@ -1,0 +1,34 @@
+{
+  "name": "base64-cryptocurrency-icons",
+  "version": "1.0.0",
+  "description": "A collection of base64-encoded cryptocurrency icons",
+  "main": "build/index.js",
+  "scripts": {
+    "build": "tsc",
+    "test": "node index.test.js",
+    "generate": "bash generate.sh"
+  },
+  "keywords": [
+    "cryptocurrency",
+    "crypto",
+    "icons",
+    "icon",
+    "svg",
+    "base64"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/corollari/base64-crypto-icons.git"
+  },
+  "files": [
+    "build/index.js",
+    "build/index.d.ts"
+  ],
+  "types": "build/index.d.ts",
+  "devDependencies": {
+    "@types/node": "^14.0.24",
+    "svgo": "^1.3.2",
+    "typescript": "^3.9.6"
+  },
+  "license": "MIT"
+}
