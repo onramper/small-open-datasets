@@ -19,6 +19,11 @@ jobs:
           node-version: '12.x'
       - run: npm ci
       - run: npm run generate
+      - name: Upload generated files
+        uses: actions/upload-artifact@v2
+        with:
+          name: generated
+          path: build/
 
   test:
     needs: [build]
@@ -29,12 +34,10 @@ jobs:
     name: Node ${{ matrix.node }} tests
     steps:
       - uses: actions/checkout@v2
-      - name: Get Node.js
-        uses: actions/setup-node@v1
+      - name: Download artifacts from build job 
+        uses: actions/download-artifact@v2
         with:
-          node-version: '12.x'
-      - run: npm ci
-      - run: npm run generate
+          name: generated
       - name: Setup node
         uses: actions/setup-node@v1
         with:
@@ -47,13 +50,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+      - name: Download artifacts from build job 
+        uses: actions/download-artifact@v2
         with:
-          node-version: '12.x'
-          registry-url: 'https://registry.npmjs.org'
-      - run: npm ci 
-      - name: Build files
-        run: npm run generate
+          name: generated
       - name: Get currently published data
         run: |
           mkdir old
