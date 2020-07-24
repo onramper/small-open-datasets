@@ -11,7 +11,7 @@ function base64encode(buf:Buffer):string{
 
 // 50 cryptocurrencies/page
 const firstPage = 1;
-const maxPage = 10; // Leave as null to get all pages
+const maxPage = 90; // Put a high number to get all pages
 
 (async function () {
 	let result: {
