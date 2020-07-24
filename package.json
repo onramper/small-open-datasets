@@ -1,6 +1,6 @@
 {
   "name": "base64-cryptocurrency-icons",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A collection of base64-encoded cryptocurrency icons",
   "main": "build/index.js",
   "scripts": {
