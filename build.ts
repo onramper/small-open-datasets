@@ -5,6 +5,10 @@ function sleep(seconds: number) {
 	return new Promise(resolve => setTimeout(resolve, seconds * 1000));
 }
 
+function base64encode(buf:Buffer):string{
+	return "data:image/png;base64," + buf.toString('base64');
+}
+
 // 50 cryptocurrencies/page
 const firstPage = 1;
 const maxPage = 10; // Leave as null to get all pages
@@ -51,7 +55,7 @@ const maxPage = 10; // Leave as null to get all pages
 				}).then(data => {
 					result[symbol] = {
 						name,
-						icon: "data:image/png;base64," + data.toString('base64')
+						icon: base64encode(data)
 					}
 				})
 			}))
@@ -71,5 +75,9 @@ const maxPage = 10; // Leave as null to get all pages
 		}
 	}
 
+	finalResult['generic'] = {
+		name: "Generic",
+		icon: base64encode((await fs.readFile('./generic.png')))
+	}
 	await fs.writeFile(`index.ts`, `export = ${JSON.stringify(finalResult)} as {[symbol:string]:{name:string, icon:string}}`);
 })()

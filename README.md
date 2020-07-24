@@ -6,6 +6,8 @@ This module just provides a base64-encoded version of the icons provided by [coi
 
 Currently the package present on npm only includes the first 500 cryptocurrencies (ordered by marketcap) to keep package size low, but if you'd like to have access to the 7,000+ cryptocurrencies on coingecko just change the constants on `build.ts`.
 
+The package also includes a generic icon that can be accessed as `generic`.
+
 ## Usage
 ```js
 const icons = require('base64-cryptocurrency-icons');
