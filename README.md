@@ -6,7 +6,7 @@ This module just provides a base64-encoded version of the icons present in [spot
 
 ## Usage
 ```js
-const icons = require('base64-crypto-icons');
+const icons = require('base64-cryptocurrency-icons');
 
 console.log(icons["BTC"]);
 {
