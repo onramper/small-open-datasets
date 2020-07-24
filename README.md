@@ -19,9 +19,11 @@ console.log(icons["BTC"]);
 ## Features
 - Uncompressed size: ~850 kB
 - Compressed size: ~300 kB
-- Includes Typescript types
+- Native Typescript types
 - Tracks [spothq/cryptocurrency-icons](https://github.com/spothq/cryptocurrency-icons) through a daily CI job
-- Automatic npm package publication, it will always be up-to-date
+- Automatic npm package publication that keeps it always up-to-date
+- Zero dependencies
+- Compatible with all versions of node since 0.12 (released in february 2015)
 
 ## License
 MIT
