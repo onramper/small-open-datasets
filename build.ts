@@ -71,5 +71,5 @@ const maxPage = 10; // Leave as null to get all pages
 		}
 	}
 
-	await fs.writeFile(`index.ts`, `export = ${JSON.stringify(result)} as {[symbol:string]:{name:string, icon:string}}`);
+	await fs.writeFile(`index.ts`, `export = ${JSON.stringify(finalResult)} as {[symbol:string]:{name:string, icon:string}}`);
 })()
