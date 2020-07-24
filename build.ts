@@ -5,7 +5,9 @@ function sleep(seconds: number) {
 	return new Promise(resolve => setTimeout(resolve, seconds * 1000));
 }
 
+// 50 cryptocurrencies/page
 const firstPage = 1;
+const maxPage = 10; // Leave as null to get all pages
 
 (async function () {
 	let result: {
@@ -14,9 +16,10 @@ const firstPage = 1;
 			icon: string,
 		}
 	} = {};
+	const finalResult: typeof result = {};
 
 	let pageOfLastError = firstPage;
-	for (let page = firstPage; page === firstPage || Object.keys(result).length !== 0; page++) {
+	for (let page = firstPage; !(page !== firstPage && Object.keys(result).length !== 0 && page <= maxPage); page++) {
 		try {
 			result = {};
 			const coins = await fetch(`https://api.coingecko.com/api/v3/coins?page=${page}`).then(res => res.json()) as {
@@ -53,7 +56,8 @@ const firstPage = 1;
 				})
 			}))
 
-			await fs.writeFile(`pages/${page}.json`, JSON.stringify(result));//"export = " + JSON.stringify(result) + " as {[symbol:string]:{name:string, icon:string}}");
+			await fs.writeFile(`pages/${page}.json`, JSON.stringify(result));
+			Object.assign(finalResult, result);
 		} catch (e) {
 			// Probably hit the rate limit of 100 requests/min
 			if (page !== pageOfLastError) {
@@ -66,4 +70,6 @@ const firstPage = 1;
 			}
 		}
 	}
+
+	await fs.writeFile(`index.ts`, `export = ${JSON.stringify(result)} as {[symbol:string]:{name:string, icon:string}}`);
 })()
