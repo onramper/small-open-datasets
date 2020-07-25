@@ -1,0 +1,7 @@
+const icons = require('./index.js')
+const assert = require('assert')
+
+assert.deepEqual(icons["GBP"], {
+  "name": "British pound",
+  "icon": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAABn0lEQVR4nO2Yu07DMBRAjxEvQZFYYGGEHwAmBlYGNnYGhMQnMLEBv8HAwB8gsfAJYUFiZ2LoRoUQjwgzJG0jJ02N7baXyEeyZLuOe0+d1NdRWmuawNSkAwhFFJFGFJFGFJFGFJFGFJFGFJFGY0SmXS5SSg0bMg8cAvvAFrCSf9cr8Aw8AvfAXd7Xw/lYobX+cxnCHvACaIvyDlwBcz7xaK2DixwAaUXAP8DnAJnE94cNLbIKdIwgr4Ft+rfwErADnAEP+ZgTaSIXhsRl3dLlbAKL0kSSgkQHWLAQKeEqEvLvd71QT8ge5LERUmS5UG8HnNeKUW2I6YjmHUhjdvYoIo3GiCiL3Kl8UZY0vhndxY0tJUtJ6mhVdbrEA34ivm+/K1NoV5HG3Fo+IsooRW4qPq8b701cEWlEEYMZo/0daF5rQomsGe1/m/1uGO2nQPNaE0rkuFD/AG4DzWtPgKPuLvBF/5h7Ou54fM/ss8ARWc7VfeVzjudm5yrik2u1yd4g9mLA75ze6oq4MMmksTQtxKTRbUUk0pgViSLSiCLS+AU57Z3dObIkRwAAAABJRU5ErkJggg=="
+})
