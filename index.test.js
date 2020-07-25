@@ -1,4 +1,4 @@
-const icons = require('./index.js')
+const icons = require('./build/index.js')
 const assert = require('assert')
 
 assert.deepEqual(icons["GBP"], {

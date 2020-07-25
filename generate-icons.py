@@ -51,4 +51,4 @@ for i in range(len(currency_table)):
     icon = build_icon(symbol, iso_code)
     currencies[iso_code] = { "name":name, "icon":icon }
 
-open("index.js", "w+").write("module.exports = " + json.dumps(currencies))
+open("index.ts", "w+").write("export = " + json.dumps(currencies) + " as {[symbol:string]:{name:string, icon:string}}")

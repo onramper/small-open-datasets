@@ -6,6 +6,7 @@ All currency data is directly sourced from [this wikipedia page](https://en.wiki
 poetry install
 poetry shell
 python generate-icons.py
+npm run build
 ```
 
 ## Use
