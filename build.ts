@@ -53,7 +53,7 @@ const maxPage = 90; // Put a high number to get all pages
 					}
 					return res.buffer();
 				}).then(data => {
-					result[symbol] = {
+					result[symbol.toUpperCase()] = {
 						name,
 						icon: base64encode(data)
 					}
@@ -76,7 +76,7 @@ const maxPage = 90; // Put a high number to get all pages
 		}
 	}
 
-	finalResult['generic'] = {
+	finalResult['GENERIC'] = {
 		name: "Generic",
 		icon: base64encode((await fs.readFile('./generic.png')))
 	}
