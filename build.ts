@@ -20,7 +20,7 @@ const maxPage = 90; // Put a high number to get all pages
 			icon: string,
 		}
 	} = {};
-	const finalResult: typeof result = {};
+	let finalResult: typeof result = {};
 
 	let pageOfLastError = firstPage;
 	for (let page = firstPage; (page === firstPage || Object.keys(result).length !== 0) && page <= maxPage; page++) {
@@ -61,7 +61,8 @@ const maxPage = 90; // Put a high number to get all pages
 			}))
 
 			await fs.writeFile(`pages/${page}.json`, JSON.stringify(result));
-			Object.assign(finalResult, result);
+			// For cryptocurrencies that have the same symbol only the most popular one (decided by order of inclusion in coingecko's API) is included
+			finalResult = {...result, ...finalResult};
 		} catch (e) {
 			// Probably hit the rate limit of 100 requests/min
 			if (page !== pageOfLastError) {

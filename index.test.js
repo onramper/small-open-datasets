@@ -7,3 +7,5 @@ assert.deepEqual(icons["btc"], {
 })
 
 assert.notEqual(icons["generic"], undefined)
+assert.strictEqual(icons["sol"].name, "Solana")
+assert.strictEqual(icons["xtz"].name, "Tezos")
