@@ -1,6 +1,8 @@
 # currency-icons
 All currency data is directly sourced from [this wikipedia page](https://en.wikipedia.org/wiki/List_of_circulating_currencies).
 
+Icons are generated using Noto Sans Light.
+
 ## Generate
 ```bash
 poetry install

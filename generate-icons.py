@@ -4,6 +4,10 @@ from PIL import Image, ImageDraw, ImageFont
 import base64
 from io import BytesIO
 import json
+from os import listdir
+from os.path import join
+from fontTools.ttLib import TTFont
+from fontTools.unicode import Unicode
 
 def remove_citations(x):
     return re.sub(r'\[.{1,2}\]', '', str(x)).replace('\u200a', '')
@@ -17,9 +21,36 @@ def generate_table(url):
 def clean_country_table(table):
     return table.applymap(lambda x: re.sub(r' – See .*', '', x))
 
+max_fontsize = 40
 fonts = {}
-for i in range(1, 41):
-    fonts[i] = ImageFont.truetype("./NotoSans2-Regular.ttf", i)
+for size in range(1, max_fontsize+1):
+    fonts[size] = []
+for font_filename in listdir("fonts"):
+    font_path = join("fonts", font_filename)
+    ttfont = TTFont(font_path)
+    for size in range(1, max_fontsize+1):
+        fonts[size].append({
+            "if":ImageFont.truetype(font_path, size),
+            "tt":ttfont
+        })
+
+def has_glyph(font, glyph):
+    for table in font['cmap'].tables:
+        if ord(glyph) in table.cmap.keys():
+            return True
+    return False
+
+def select_font(fonts, symbol):
+    for font in fonts:
+        symbol_present = True
+        for char in symbol:
+            if not has_glyph(font["tt"], char):
+                symbol_present = False
+                break
+        if symbol_present:
+            return font["if"]
+    print("Couldn't find character "+ symbol +" in any font")
+    raise ValueError("Couldn't find character "+ symbol +" in any font")
 
 def new_image():
     img = Image.new('RGBA', (W, H), (255,255,255,0))
@@ -36,7 +67,7 @@ W, H = (50,50)
 def get_max_fontsize(fontsize, symbol):
     img, draw = new_image()
     for size in range(fontsize, 0, -1):
-        font=fonts[size]
+        font=select_font(fonts[size], symbol)
         w, h = draw.textsize(symbol, font=font)
         if w < W:
             return size
@@ -63,12 +94,14 @@ def build_icon(symbol, code, font):
 currency_url = "https://en.wikipedia.org/wiki/List_of_circulating_currencies#List_of_circulating_currencies_by_state_or_territory"
 currency_table = generate_table(currency_url) 
 
-max_fontsize = 40
 for symbol in currency_table['Symbol orAbbrev.']:
     if symbol == "(none)":
         continue
     symbol = normalize_symbol(symbol)
-    max_fontsize = get_max_fontsize(max_fontsize, symbol)
+    try:
+        max_fontsize = get_max_fontsize(max_fontsize, symbol)
+    except:
+        continue
 
 currencies = {}
 for i in range(len(currency_table)):
@@ -78,7 +111,11 @@ for i in range(len(currency_table)):
     if symbol == "(none)" or iso_code == "(none)" or name == "(none)":
         continue
     symbol = normalize_symbol(symbol)
-    icon = build_icon(symbol, iso_code, fonts[max_fontsize])
+    try:
+        font = select_font(fonts[max_fontsize], symbol)
+    except:
+        continue
+    icon = build_icon(symbol, iso_code, font)
     currencies[iso_code] = { "name":name, "icon":icon, "symbol":symbol }
 
 open("index.ts", "w+").write("export = " + json.dumps(currencies) + " as {[symbol:string]:{name:string, icon:string, symbol:string}|undefined}")

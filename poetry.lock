@@ -1,5 +1,25 @@
 [[package]]
 category = "main"
+description = "Tools to manipulate font files"
+name = "fonttools"
+optional = false
+python-versions = ">=3.6"
+version = "4.13.0"
+
+[package.extras]
+all = ["fs (>=2.2.0,<3)", "lxml (>=4.0,<5)", "zopfli (>=0.1.4)", "lz4 (>=1.7.4.2)", "matplotlib", "sympy", "brotli (>=1.0.1)", "scipy", "brotlipy (>=0.7.0)", "munkres", "unicodedata2 (>=13.0.0)", "xattr"]
+graphite = ["lz4 (>=1.7.4.2)"]
+interpolatable = ["scipy", "munkres"]
+lxml = ["lxml (>=4.0,<5)"]
+plot = ["matplotlib"]
+symfont = ["sympy"]
+type1 = ["xattr"]
+ufo = ["fs (>=2.2.0,<3)"]
+unicode = ["unicodedata2 (>=13.0.0)"]
+woff = ["zopfli (>=0.1.4)", "brotli (>=1.0.1)", "brotlipy (>=0.7.0)"]
+
+[[package]]
+category = "main"
 description = "Powerful and Pythonic XML processing library combining libxml2/libxslt with the ElementTree API."
 name = "lxml"
 optional = false
@@ -72,10 +92,14 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*"
 version = "1.15.0"
 
 [metadata]
-content-hash = "8b22fb97be4652065c85e052369a4a19da2a47c4b775e6ccc4a59ddc187c1b20"
+content-hash = "98a2dee56248cb566e0a9812ae898850c7cd624970786dc4e9322f56829ab375"
 python-versions = "^3.8"
 
 [metadata.files]
+fonttools = [
+    {file = "fonttools-4.13.0-py3-none-any.whl", hash = "sha256:c9fc9b1c803260e19362332d47ae2a8d701d4c085b1705bed39ac61a3f2dcb44"},
+    {file = "fonttools-4.13.0.zip", hash = "sha256:63987cd374c39a75146748f8be8637634221e53fef15cdf76f17777676d8545a"},
+]
 lxml = [
     {file = "lxml-4.5.2-cp27-cp27m-macosx_10_9_x86_64.whl", hash = "sha256:74f48ec98430e06c1fa8949b49ebdd8d27ceb9df8d3d1c92e1fdc2773f003f20"},
     {file = "lxml-4.5.2-cp27-cp27m-manylinux1_i686.whl", hash = "sha256:e70d4e467e243455492f5de463b72151cc400710ac03a0678206a5f27e79ddef"},
