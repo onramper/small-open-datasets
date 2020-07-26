@@ -80,5 +80,5 @@ const maxPage = 90; // Put a high number to get all pages
 		name: "Generic",
 		icon: base64encode((await fs.readFile('./generic.png')))
 	}
-	await fs.writeFile(`index.ts`, `export = ${JSON.stringify(finalResult)} as {[symbol:string]:{name:string, icon:string}}`);
+	await fs.writeFile(`index.ts`, `export = ${JSON.stringify(finalResult)} as {[symbol:string]:{name:string, icon:string}|undefined}`);
 })()
