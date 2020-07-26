@@ -21,26 +21,54 @@ fonts = {}
 for i in range(1, 41):
     fonts[i] = ImageFont.truetype("./NotoSans2-Regular.ttf", i)
 
-def build_icon(symbol, code):
-    W, H = (50,50)
+def new_image():
     img = Image.new('RGBA', (W, H), (255,255,255,0))
     draw = ImageDraw.Draw(img)
-    for size in range(40, 0, -1):
-        fnt=fonts[size]
-        w, h = draw.textsize(symbol, font=fnt)
+    return (img, draw)
+
+def normalize_symbol(symbol):
+    if " or " in symbol:
+        return symbol.split(' or ')[-1]
+    else:
+        return symbol
+
+W, H = (50,50)
+def get_max_fontsize(fontsize, symbol):
+    img, draw = new_image()
+    for size in range(fontsize, 0, -1):
+        font=fonts[size]
+        w, h = draw.textsize(symbol, font=font)
         if w < W:
-            break
-    draw.text(((W-w)/2,(H-h-5)/2), symbol, font=fnt, fill=(0,0,0, 255), align='center')
-    # Crop
-    imageBox = img.getbbox()
-    cropped = img.crop(imageBox)
+            return size
+
+def get_char_measurements(symbol, font):
+    img, draw = new_image()
+    draw.text((0,0), symbol, font=font, fill=(0,0,0, 255), align='center')
+    (left, upper, right, lower) = img.getbbox()
+    offset_x = left
+    offset_y = upper
+    w = right - left
+    h = lower - upper
+    return offset_x, offset_y, w, h
+
+def build_icon(symbol, code, font):
+    img, draw = new_image()
+    offset_x, offset_y, w, h = get_char_measurements(symbol, font)
+    draw.text(((W-w)/2 - offset_x,(H-h)/2 - offset_y), symbol, font=font, fill=(0,0,0, 255), align='center')
     buffered = BytesIO()
-    cropped.save(buffered, format="PNG")
-    #img.save(code+'.png')
+    img.save(buffered, format="PNG")
+    img.save('icons/' +code+'.png')
     return "data:image/png;base64," + base64.b64encode(buffered.getvalue()).decode("utf-8") 
 
 currency_url = "https://en.wikipedia.org/wiki/List_of_circulating_currencies#List_of_circulating_currencies_by_state_or_territory"
 currency_table = generate_table(currency_url) 
+
+max_fontsize = 40
+for symbol in currency_table['Symbol orAbbrev.']:
+    if symbol == "(none)":
+        continue
+    symbol = normalize_symbol(symbol)
+    max_fontsize = get_max_fontsize(max_fontsize, symbol)
 
 currencies = {}
 for i in range(len(currency_table)):
@@ -49,9 +77,8 @@ for i in range(len(currency_table)):
     name = currency_table['Currency'][i]
     if symbol == "(none)" or iso_code == "(none)" or name == "(none)":
         continue
-    if " or " in symbol:
-        symbol = symbol.split(' or ')[-1]
-    icon = build_icon(symbol, iso_code)
+    symbol = normalize_symbol(symbol)
+    icon = build_icon(symbol, iso_code, fonts[max_fontsize])
     currencies[iso_code] = { "name":name, "icon":icon, "symbol":symbol }
 
 open("index.ts", "w+").write("export = " + json.dumps(currencies) + " as {[symbol:string]:{name:string, icon:string, symbol:string}|undefined}")
