@@ -88,7 +88,7 @@ def build_icon(symbol, code, font):
     draw.text(((W-w)/2 - offset_x,(H-h)/2 - offset_y), symbol, font=font, fill=(0,0,0, 255), align='center')
     buffered = BytesIO()
     img.save(buffered, format="PNG")
-    img.save('icons/' +code+'.png')
+    #img.save('icons/' +code+'.png')
     return "data:image/png;base64," + base64.b64encode(buffered.getvalue()).decode("utf-8") 
 
 currency_url = "https://en.wikipedia.org/wiki/List_of_circulating_currencies#List_of_circulating_currencies_by_state_or_territory"
