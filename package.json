@@ -1,6 +1,6 @@
 {
   "name": "currency-icons",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Icons for all currencies",
   "main": "build/index.js",
   "scripts": {
