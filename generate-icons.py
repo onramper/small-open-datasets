@@ -31,8 +31,11 @@ def build_icon(symbol, code):
         if w < W:
             break
     draw.text(((W-w)/2,(H-h-5)/2), symbol, font=fnt, fill=(0,0,0, 255), align='center')
+    # Crop
+    imageBox = img.getbbox()
+    cropped = img.crop(imageBox)
     buffered = BytesIO()
-    img.save(buffered, format="PNG")
+    cropped.save(buffered, format="PNG")
     #img.save(code+'.png')
     return "data:image/png;base64," + base64.b64encode(buffered.getvalue()).decode("utf-8") 
 
@@ -49,6 +52,6 @@ for i in range(len(currency_table)):
     if " or " in symbol:
         symbol = symbol.split(' or ')[-1]
     icon = build_icon(symbol, iso_code)
-    currencies[iso_code] = { "name":name, "icon":icon }
+    currencies[iso_code] = { "name":name, "icon":icon, "symbol":symbol }
 
-open("index.ts", "w+").write("export = " + json.dumps(currencies) + " as {[symbol:string]:{name:string, icon:string}|undefined}")
+open("index.ts", "w+").write("export = " + json.dumps(currencies) + " as {[symbol:string]:{name:string, icon:string, symbol:string}|undefined}")
