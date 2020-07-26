@@ -30,11 +30,16 @@ jobs:
           node-version: '12.x'
       - run: npm ci
       - run: npm run build
-      - name: Upload generated files
+      - name: Upload generated package files
         uses: actions/upload-artifact@v2
         with:
-          name: generated
+          name: package
           path: build/
+      - name: Upload generated icons
+        uses: actions/upload-artifact@v2
+        with:
+          name: icons
+          path: icons/
 
   test:
     needs: [build]
@@ -48,7 +53,7 @@ jobs:
       - name: Download artifacts from build job 
         uses: actions/download-artifact@v2
         with:
-          name: generated
+          name: package
           path: build
       - name: Setup node
         uses: actions/setup-node@v1
@@ -69,7 +74,7 @@ jobs:
       - name: Download artifacts from build job 
         uses: actions/download-artifact@v2
         with:
-          name: generated
+          name: package
           path: build
       - name: Get currently published data
         run: |
