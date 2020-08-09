@@ -34,12 +34,12 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: package
-          path: build/
+          path: currency-icons/build/
       - name: Upload generated icons
         uses: actions/upload-artifact@v2
         with:
           name: icons
-          path: icons/
+          path: currency-icons/icons/
 
   test:
     needs: [build]
@@ -54,7 +54,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: package
-          path: build
+          path: currency-icons/build
       - name: Setup node
         uses: actions/setup-node@v1
         with:
@@ -75,7 +75,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: package
-          path: build
+          path: currency-icons/build
       - name: Get currently published data
         run: |
           mkdir old
