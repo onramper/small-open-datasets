@@ -35,11 +35,6 @@ jobs:
         with:
           name: package
           path: build/
-      - name: Upload generated icons
-        uses: actions/upload-artifact@v2
-        with:
-          name: icons
-          path: icons/
 
   test:
     needs: [build]
@@ -81,11 +76,11 @@ jobs:
           mkdir old
           cd old
           npm init -y
-          npm install currency-icons
+          npm install iso3166-alpha-converter
       - name: Compare new and old data
         id: compare
         run: |
-          if ! diff -qrN ./build/index.js ./old/node_modules/currency-icons/build/index.js; then
+          if ! diff -qrN ./build/index.js ./old/node_modules/iso3166-alpha-converter/build/index.js; then
             echo "::set-output name=changed::true"
             git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
             git config user.name "$GITHUB_ACTOR"
