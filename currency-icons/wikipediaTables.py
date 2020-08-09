@@ -1,1 +1,0 @@
-../wikipedia-tables/wikipediaTables.py

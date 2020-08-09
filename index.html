@@ -1,0 +1,79 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Convert country name to iso code</title>
+		<meta charset="utf-8" />
+		<link rel="shortcut icon" href="favicon.ico">
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+<style>
+.some-page-wrapper {
+  margin: 15px;
+}
+.row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+}
+.column {
+  display: flex;
+  flex-direction: column;
+  flex-basis: 100%;
+  flex: 1;
+}
+.double-column {
+  display: flex;
+  flex-direction: column;
+  flex-basis: 100%;
+  flex: 2;
+}
+</style>
+	</head>
+	<body>
+    <div class='some-page-wrapper'>
+  <div class='row'>
+    <div class='column'>
+      <div>
+        <h3>Country name</h3>
+        <textarea style="width:100%; height:80vh" id="countryName" oninput="getAlphas()" placeholder="Algeria
+Bangladesh
+Bolivia"></textarea>
+      </div>
+    </div>
+    <div class='column'>
+      <div>
+        <h3>Alpha2</h3>
+        <textarea style="width:100%; height:80vh" id="alpha2"></textarea>
+      </div>
+    </div>
+    <div class='column'>
+      <div>
+        <h3>Alpha 3</h3>
+        <textarea style="width:100%; height:80vh" id="alpha3"></textarea>
+      </div>
+    </div>
+  </div>
+</div>
+  <script  type="module" >
+import data from './data.js'
+window.getAlphas = ()=>{
+  document.getElementById('alpha2').value=''
+  document.getElementById('alpha3').value=''
+  document.getElementById('countryName').value.split('\n').map(c=>{
+    c=c.trim()
+    if(c!==''){
+      for(const cc of data){
+        if(cc.name.includes(c) || cc.officialName.includes(c)){
+          document.getElementById('alpha2').value+=cc.alpha2+'\n'
+          document.getElementById('alpha3').value+=cc.alpha3+'\n'
+          return
+        }
+      }
+    }
+    document.getElementById('alpha2').value+="Not found\n"
+    document.getElementById('alpha3').value+="Not found\n"
+  })
+}
+  </script>
+	</body>
+</html>
