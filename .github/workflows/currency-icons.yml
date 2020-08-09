@@ -1,0 +1,101 @@
+name: Currency Icons
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+  schedule:
+    # Weekly job (0:00 on Monday)
+    - cron:  '0 0 * * 1'
+defaults:
+  run:
+    working-directory: ./currency-icons
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+      - uses: dschep/install-poetry-action@v1.3
+      - name: install deps
+        run: poetry install
+      - name: Get Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+      - run: npm ci
+      - name: Generate files
+        run: npm run build
+      - name: Upload generated package files
+        uses: actions/upload-artifact@v2
+        with:
+          name: package
+          path: build/
+      - name: Upload generated icons
+        uses: actions/upload-artifact@v2
+        with:
+          name: icons
+          path: icons/
+
+  test:
+    needs: [build]
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [ '0.12', '4', '6', '8', '10', '12', '14' ] # Major releases as described in https://nodejs.org/en/download/releases/
+    name: Node ${{ matrix.node }} tests
+    steps:
+      - uses: actions/checkout@v2
+      - name: Download artifacts from build job 
+        uses: actions/download-artifact@v2
+        with:
+          name: package
+          path: build
+      - name: Setup node
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node }}
+      - run: npm test
+
+  publish:
+    needs: [build, test]
+    if: ( github.event_name == 'push' && github.ref == 'refs/heads/master' ) || github.event_name == 'schedule'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+          registry-url: 'https://registry.npmjs.org'
+      - name: Download artifacts from build job 
+        uses: actions/download-artifact@v2
+        with:
+          name: package
+          path: build
+      - name: Get currently published data
+        run: |
+          mkdir old
+          cd old
+          npm init -y
+          npm install currency-icons
+      - name: Compare new and old data
+        id: compare
+        run: |
+          if ! diff -qrN ./build/index.js ./old/node_modules/currency-icons/build/index.js; then
+            echo "::set-output name=changed::true"
+            git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+            git config user.name "$GITHUB_ACTOR"
+            npm version patch 
+          else
+            echo "::set-output name=changed::false"
+          fi
+      - run: npm publish
+        if: github.event_name == 'push' || ( steps.compare.outputs.changed == 'true' && github.event_name == 'schedule' )
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Push version changes to github repo
+        run: git push

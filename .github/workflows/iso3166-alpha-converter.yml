@@ -1,12 +1,15 @@
-name: Build-Test-Publish
+name: Currency Icons
 
 on:
   push:
     branches: [ master ]
   pull_request:
   schedule:
-    # Weekly job (0:00 on Monday)
-    - cron:  '0 0 * * 1'
+    # Weekly job (0:00 on Tuesday)
+    - cron:  '0 0 * * 2'
+defaults:
+  run:
+    working-directory: ./iso3166-alpha-converter
 
 jobs:
   build:
@@ -19,17 +22,14 @@ jobs:
           python-version: 3.8
       - uses: dschep/install-poetry-action@v1.3
       - name: install deps
-        run: |
-          poetry install
-          poetry shell
-      - name: Generate files
-        run: python generate-icons.py 
+        run: poetry install
       - name: Get Node.js
         uses: actions/setup-node@v1
         with:
           node-version: '12.x'
       - run: npm ci
-      - run: npm run build
+      - name: Generate files
+        run: npm run build
       - name: Upload generated package files
         uses: actions/upload-artifact@v2
         with:
@@ -85,7 +85,7 @@ jobs:
       - name: Compare new and old data
         id: compare
         run: |
-          if ! diff -qrN ./build/index.js ./old/node_modules/base64-cryptocurrency-icons/build/index.js; then
+          if ! diff -qrN ./build/index.js ./old/node_modules/currency-icons/build/index.js; then
             echo "::set-output name=changed::true"
             git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
             git config user.name "$GITHUB_ACTOR"

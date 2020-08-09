@@ -8,8 +8,7 @@ Icons are generated using Noto Sans Light.
 ## Generate
 ```bash
 poetry install
-poetry shell
-python generate-icons.py
+npm install
 npm run build
 ```
 

@@ -1,0 +1,49 @@
+name: Country Name to ISO Code
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+  schedule:
+    # Weekly job (0:00 on Wednesday)
+    - cron:  '0 0 * * 3'
+defaults:
+  run:
+    working-directory: ./country-name-to-iso-code
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+      - uses: dschep/install-poetry-action@v1.3
+      - name: install deps
+        run: poetry install
+      - name: Generate files
+        run: poetry run python generate-data.py
+      - name: Upload generated package files
+        uses: actions/upload-artifact@v2
+        with:
+          name: package
+          path: data.js
+
+  publish:
+    needs: build
+    if: ( github.event_name == 'push' && github.ref == 'refs/heads/master' ) || github.event_name == 'schedule'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Download artifacts from build job 
+        uses: actions/download-artifact@v2
+        with:
+          name: package
+          path: data.js
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3.6.4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./

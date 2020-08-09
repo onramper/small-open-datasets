@@ -9,8 +9,7 @@ Just visit https://corollari.github.io/countryName2isoCode/ and input your count
 ## Development
 ```bash
 poetry install
-poetry shell
-python generate-data.py
+poetry run python generate-data.py
 ```
 
 ## License

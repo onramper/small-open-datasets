@@ -4,7 +4,7 @@
   "description": "Icons for all currencies",
   "main": "build/index.js",
   "scripts": {
-    "build": "tsc",
+    "build": "poetry run python generate-icons.py && tsc",
     "test": "node index.test.js"
   },
   "repository": {
