@@ -2,3 +2,4 @@ index.ts
 node_modules
 build
 icons
+__pycache__

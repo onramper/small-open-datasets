@@ -1,5 +1,4 @@
-import pandas as pd
-import re
+from wikipediaTables import remove_citations, generate_table
 from PIL import Image, ImageDraw, ImageFont
 import base64
 from io import BytesIO
@@ -8,18 +7,6 @@ from os import listdir, makedirs
 from os.path import join
 from fontTools.ttLib import TTFont
 from fontTools.unicode import Unicode
-
-def remove_citations(x):
-    return re.sub(r'\[.{1,2}\]', '', str(x)).replace('\u200a', '')
-
-def generate_table(url):
-    table = pd.read_html(url)[0]
-    table = table.applymap(remove_citations)
-    table.rename(columns=remove_citations, inplace=True)
-    return table
-
-def clean_country_table(table):
-    return table.applymap(lambda x: re.sub(r' – See .*', '', x))
 
 max_fontsize = 70
 fonts = {}

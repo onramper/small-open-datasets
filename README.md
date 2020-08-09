@@ -1,27 +1,28 @@
-# currency-icons
-All currency data is directly sourced from [this wikipedia page](https://en.wikipedia.org/wiki/List_of_circulating_currencies).
+# Small Open Datasets
+> A collection of automatically-updated, ready-to-use and open-licensed datasets
 
-Icons are generated using Noto Sans Light.
-
-## Generate
-```bash
-poetry install
-poetry shell
-python generate-icons.py
-npm run build
-```
-
-## Use
-```js
-import icons from 'currency-icons';
-
-console.log(icons["GBP"])
-{
-  "name": "British pound",
-  "icon": "data:image/png;base64,iVBORw0KGgoAAAANS..."
-}
-```
+## Dataset list
+- [Currency Icons](./currency-icons): Icons for all circulating currencies in the world, generated from Wikipedia data
+- [Country name to iso code converter](./countryName2isoCode): A simple web utility to mass convert country names to their equivalent ISO3166 codes
 
 ## Why use this package
-- Others are not up-to-date or are incorrect
-- This is the only package that provides images, this is important because if you display currency symbols directly to your users, some of the currency symbols will be displayed as tofu (those ugly boxes) because the end user isn't using a font that supports those glyphs.
+There are tons of projects on the internet that also provide this same data, however I haven't been able to find any project that checks all these boxes:
+- [ ] Is up to date
+- [ ] Is exhaustive
+- [ ] Is correct
+- [ ] Provides licensing information on the data or states the source of the data
+
+This project attempts to tick all of these requirements by:
+- Providing the source of the dataset, along with complete licensing information
+- Establish weekly CI jobs that update the apckages with the latest information and send notifications if anything breaks
+- Make sure that the source is kept up to date
+- Include only datasets that have permissive licenses
+
+Furthermore, I've included extra nice-to-have things for many of the datasets, such as rendered cryptocurrency icons, which can be used to display a currency icon that is not supported by the system font.
+
+## Licensing
+Everything on this repo has been written directly by me and is under the MIT license, but the npm packages or websites generated using the code from this repo include data from external sources, which have different licenses.
+
+More concretely, most of that data is under the Creative Commons Attribution-ShareAlike 3.0 Unported License (CC BY-SA) license, the one used by wikipedia which allows anyone to do whatever you want with the data as long as you provide proper attribution.
+
+For data that is not under that license, I've made sure that it's license is permissive (eg: all allow commercial use) and can be considered open, but the specific details about each one can be found on the directory of each package.
