@@ -19,7 +19,7 @@ This project attempts to tick all of these requirements by:
 - Make sure that the source is kept up to date
 - Include only datasets that have permissive licenses
 
-Furthermore, I've included extra nice-to-have things for many of the datasets, such as rendered cryptocurrency icons, which can be used to display a currency icon that is not supported by the system font.
+Furthermore, I've included extra nice-to-have things for many of the datasets, such as pre-rendered currency symbols, which can be used to display a symbol that is not supported by the system font.
 
 ## Licensing
 Everything on this repo has been written directly by me and is under the MIT license, but the npm packages or websites generated using the code from this repo include data from external sources, which have different licenses.
