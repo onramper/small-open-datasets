@@ -42,6 +42,7 @@ jobs:
         with:
           name: package
           path: ./country-name-to-iso-code/data.js
+      - run: rm .gitignore
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3.6.4
         with:
