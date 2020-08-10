@@ -1,0 +1,1 @@
+Some code used to retrieve and manipulate data from wikipedia pages that contain lists. This is not a package in itself, it just contains some common code used internally by several of the other packages.
