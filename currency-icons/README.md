@@ -1,9 +1,18 @@
 # Currency Icons
-> Icons for all circulating currencies in the world, generated from Wikipedia data
+> Icons for all circulating currencies in the world, generated from Wikipedia data. Now with automatic weekly updates!
 
-All currency data is directly sourced from [this wikipedia page](https://en.wikipedia.org/wiki/List_of_circulating_currencies).
+## Samples
+| Code | Name                          | Symbol | Icon |
+|------|-------------------------------|--------|------|
+| GBP  | British pound                 | £      | ![pound](./samples/GBP.png) |
+| EUR  | Euro                          | €      | ![](./samples/EUR.png)     |
+| CZK  | Czech koruna                  | Kč     | ![](./samples/CZK.png)     |
+| ANG  | Netherlands Antillean guilder | ƒ      | ![](./samples/ANG.png)     |
+| NPR  | Nepalese rupee                | रू      | ![](./samples/NPR.png)     |
 
-Icons are generated using Noto Sans Light.
+## Sources
+- Currency data comes from [this wikipedia page](https://en.wikipedia.org/wiki/List_of_circulating_currencies).
+- Icons are generated using the Noto Sans Light font.
 
 ## Generate
 ```bash
