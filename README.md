@@ -6,7 +6,7 @@
 - [Country Name to ISO Code Converter](./country-name-to-iso-code): A simple web utility to mass convert country names to their equivalent ISO3166 codes
 - [ISO 3166 Alpha Code Converter](./iso3166-alpha-converter): Convert between alpha2 ('us') and alpha3 ('USA') ISO 3166 country codes
 
-## Why use this package
+## Why use these packages
 There are tons of projects on the internet that also provide this same data, however I haven't been able to find any project that checks all these boxes:
 - [ ] Is up to date
 - [ ] Is exhaustive
