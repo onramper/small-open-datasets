@@ -19,6 +19,7 @@ import icons from 'currency-icons';
 console.log(icons["GBP"])
 {
   "name": "British pound",
+  "symbol": "£",
   "icon": "data:image/png;base64,iVBORw0KGgoAAAANS..."
 }
 ```
