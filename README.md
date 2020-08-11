@@ -16,7 +16,7 @@ There are tons of projects on the internet that also provide this same data, how
 
 This project attempts to tick all of these requirements by:
 - Providing the source of the dataset, along with complete licensing information
-- Establish weekly CI jobs that update the apckages with the latest information and send notifications if anything breaks
+- Establish weekly CI jobs that update the packages with the latest information and send notifications if anything breaks
 - Make sure that the source is kept up to date
 - Include only datasets that have permissive licenses
 
