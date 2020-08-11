@@ -1,12 +1,15 @@
-name: Build-Test-Publish
+name: Base64 Cryptocurrency Icons
 
 on:
   push:
     branches: [ master ]
   pull_request:
   schedule:
-  # * is a special character in YAML so you have to quote this string
-  - cron:  '0 0 * * 1'
+    # Weekly job (0:00 on Thursday)
+    - cron:  '0 0 * * 4'
+defaults:
+  run:
+    working-directory: ./base64-cryptocurrency-icons
 
 jobs:
   build:
@@ -23,7 +26,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: generated
-          path: build/
+          path: base64-cryptocurrency-icons/build/
 
   test:
     needs: [build]
@@ -38,7 +41,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: generated
-          path: build
+          path: base64-cryptocurrency-icons/build
       - name: Setup node
         uses: actions/setup-node@v1
         with:
@@ -59,7 +62,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: generated
-          path: build
+          path: base64-cryptocurrency-icons/build
       - name: Get currently published data
         run: |
           mkdir old
