@@ -3,15 +3,16 @@
 
 ## Dataset list
 - [Currency Icons](./currency-icons): Icons for all circulating currencies in the world, generated from Wikipedia data
+- [Base64 Cryptocurrency Icons](./base64-cryptocurrency-icons): A collection of base64-encoded cryptocurrency icons
 - [Country Name to ISO Code Converter](./country-name-to-iso-code): A simple web utility to mass convert country names to their equivalent ISO3166 codes
 - [ISO 3166 Alpha Code Converter](./iso3166-alpha-converter): Convert between alpha2 ('us') and alpha3 ('USA') ISO 3166 country codes
 
 ## Why use these packages
 There are tons of projects on the internet that also provide this same data, however I haven't been able to find any project that checks all these boxes:
-- [ ] Is up to date
-- [ ] Is exhaustive
-- [ ] Is correct
-- [ ] Provides licensing information on the data or states the source of the data
+- [x] Is up to date
+- [x] Is exhaustive
+- [x] Is correct
+- [x] Provides licensing information on the data or states the source of the data
 
 This project attempts to tick all of these requirements by:
 - Providing the source of the dataset, along with complete licensing information
