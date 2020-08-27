@@ -3,6 +3,8 @@ name: Country Name to ISO Code
 on:
   push:
     branches: [ master ]
+    paths:
+    - "country-name-to-iso-code/**"
   pull_request:
   schedule:
     # Weekly job (0:00 on Wednesday)

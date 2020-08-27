@@ -3,6 +3,8 @@ name: Currency Icons
 on:
   push:
     branches: [ master ]
+    paths:
+    - "currency-icons/**"
   pull_request:
   schedule:
     # Weekly job (0:00 on Monday)

@@ -3,6 +3,8 @@ name: Base64 Cryptocurrency Icons
 on:
   push:
     branches: [ master ]
+    paths:
+    - "base64-cryptocurrency-icons/**"
   pull_request:
   schedule:
     # Weekly job (0:00 on Thursday)
