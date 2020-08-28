@@ -1,0 +1,46 @@
+diff --git a/Makefile b/Makefile
+index ff684625..48e0c524 100644
+--- a/Makefile
++++ b/Makefile
+@@ -110,13 +110,13 @@ FLAG_GLYPH_NAMES = $(shell $(PYTHON) flag_glyph_name.py $(FLAGS))
+ else
+ FLAG_GLYPH_NAMES = 
+ endif
+-RENAMED_FLAG_NAMES = $(FLAG_GLYPH_NAMES:%=emoji_%.png)
++RENAMED_FLAG_NAMES = $(FLAG_NAMES)
+ RENAMED_FLAG_FILES = $(addprefix $(RENAMED_FLAGS_DIR)/, $(RENAMED_FLAG_NAMES))
+ 
+ EMOJI_NAMES = $(notdir $(wildcard $(EMOJI_SRC_DIR)/emoji_u*.png))
+ EMOJI_FILES= $(addprefix $(EMOJI_DIR)/,$(EMOJI_NAMES)))
+ 
+-ALL_NAMES = $(EMOJI_NAMES) $(RENAMED_FLAG_NAMES)
++ALL_NAMES = $(RENAMED_FLAG_NAMES)
+ 
+ ALL_QUANTIZED_FILES = $(addprefix $(QUANTIZED_DIR)/, $(ALL_NAMES))
+ ALL_COMPRESSED_FILES = $(addprefix $(COMPRESSED_DIR)/, $(ALL_NAMES))
+@@ -184,9 +184,6 @@ $(RENAMED_FLAG_FILES): | flag-symlinks
+ $(QUANTIZED_DIR)/%.png: $(RENAMED_FLAGS_DIR)/%.png | $(QUANTIZED_DIR)
+ 	@($(PNGQUANT) $(PNGQUANTFLAGS) -o "$@" "$<"; case "$$?" in "98"|"99") echo "reuse $<"; cp $< $@;; *) exit "$$?";; esac)
+ 
+-$(QUANTIZED_DIR)/%.png: $(EMOJI_DIR)/%.png | $(QUANTIZED_DIR)
+-	@($(PNGQUANT) $(PNGQUANTFLAGS) -o "$@" "$<"; case "$$?" in "98"|"99") echo "reuse $<";cp $< $@;; *) exit "$$?";; esac)
+-
+ $(COMPRESSED_DIR)/%.png: $(QUANTIZED_DIR)/%.png | check_tools $(COMPRESSED_DIR)
+ 	@$(ZOPFLIPNG) -y "$<" "$@" 1> /dev/null 2>&1
+ 
+@@ -206,14 +203,7 @@ $(COMPRESSED_DIR)/%.png: $(QUANTIZED_DIR)/%.png | check_tools $(COMPRESSED_DIR)
+ 	@rm -f "$@"
+ 	ttx "$<"
+ 
+-$(EMOJI).ttf: check_sequence $(EMOJI).tmpl.ttf $(EMOJI_BUILDER) $(PUA_ADDER) \
+-	$(ALL_COMPRESSED_FILES) | check_tools
+-
+-	@$(PYTHON) $(EMOJI_BUILDER) $(SMALL_METRICS) -V $(word 2,$^) "$@" "$(COMPRESSED_DIR)/emoji_u"
+-	@$(PYTHON) $(PUA_ADDER) "$@" "$@-with-pua"
+-	@$(VS_ADDER) -vs 2640 2642 2695 --dstdir '.' -o "$@-with-pua-varsel" "$@-with-pua"
+-	@mv "$@-with-pua-varsel" "$@"
+-	@rm "$@-with-pua"
++$(EMOJI).ttf: check_sequence $(ALL_COMPRESSED_FILES) | check_tools
+ 
+ check_sequence:
+ ifdef BYPASS_SEQUENCE_CHECK

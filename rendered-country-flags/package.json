@@ -1,0 +1,26 @@
+{
+  "name": "rendered-country-flags",
+  "version": "1.0.1",
+  "description": "Rendered flag emojis for all countries",
+  "main": "index.js",
+  "scripts": {
+    "generate": "bash generate.sh"
+  },
+  "keywords": [
+    "icons",
+    "emoji",
+    "country",
+    "flag",
+    "base64"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/onramper/small-open-datasets.git"
+  },
+  "files": [
+    "index.js",
+    "index.d.ts"
+  ],
+  "types": "index.d.ts",
+  "license": "MIT"
+}
