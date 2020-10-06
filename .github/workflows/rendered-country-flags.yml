@@ -1,0 +1,39 @@
+name: Rendered country flags
+
+on:
+  push:
+    branches: [ master ]
+    paths:
+    - "rendered-country-flags/**"
+  pull_request:
+defaults:
+  run:
+    working-directory: ./rendered-country-flags
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Generate files
+        run: bash generate.sh
+      - name: Upload generated package files
+        uses: actions/upload-artifact@v2
+        with:
+          name: package
+          path: ./rendered-country-flags/index.js
+
+  publish:
+    needs: build
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Download artifacts from build job 
+        uses: actions/download-artifact@v2
+        with:
+          name: package
+          path: ./rendered-country-flags/
+      - run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
