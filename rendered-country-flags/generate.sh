@@ -6,4 +6,4 @@ do
  encoded=$(base64 $f -w 0)
  echo "\"${filename%.*}\":\"data:image/png;base64,${encoded}\"," >> index.js
 done
-sed -i 's/,$/}/' index.js
+sed -i '$ s/,$/}/' index.js
